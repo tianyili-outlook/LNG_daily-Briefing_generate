@@ -415,7 +415,7 @@ with st.expander('制表、复核人，期号信息：'):
         st.text_input('日期： ', value = datetime.now().strftime('%Y%m%d'), key = 'today')
 
 st.header('三、简报生成')
-document = Document('D:/Python_Script/LNG_daily Briefing_generate/v1.0/template.docx')
+document = Document('template.docx')
 target = BytesIO()
 col1, col2= st.columns(2, gap = 'large')
 with col1:
