@@ -1,2 +1,3 @@
-PyPDF2 == 2.10.0
+PyPDF2==2.11.0
 streamlit-aggrid
+docx==0.2.4
