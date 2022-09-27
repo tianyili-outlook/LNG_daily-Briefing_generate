@@ -380,12 +380,14 @@ with st.expander('汇率'):
     if 'exchange_rate' not in st.session_state:
         st.session_state.exchange_rate = -1
     with col1:
-        exchange_date = st.text_input('日期（YYYYMMDD）： ', value = date if 'date' in locals() else '', max_chars = 8)
-        if st.button('获取汇率', help = '确保内网链接'):
-            st.session_state.exchange_rate = get_exchange_rate(exchange_date)
+#         exchange_date = st.text_input('日期（YYYYMMDD）： ', value = date if 'date' in locals() else '', max_chars = 8)
+#         if st.button('获取汇率', help = '确保内网链接'):
+#             st.session_state.exchange_rate = get_exchange_rate(exchange_date)
+        url='http://10.8.19.178:8081/exportData?startTime=&endTime='
+        st.markdown('[汇率链接](' + url + ')')
     with col2:
         alternative_exchange_rate = st.number_input('手动输入汇率： ', min_value = 0., max_value = 70., value = -1., format = '%f')
-        if st.button('手动输入汇率', help = '无需内网链接'):
+        if st.button('手动输入汇率', help = '将 售汇价:美元 列 对应日期的值填入'):
             st.session_state.exchange_rate = alternative_exchange_rate
     with col3:
         '汇率： ', st.session_state.exchange_rate
