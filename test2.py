@@ -1,4 +1,4 @@
-import streamlit as st
+﻿import streamlit as st
 import requests
 import pandas as pd
 import numpy as np
@@ -31,15 +31,13 @@ month_abbr_num = {'Jan': 1,
 
 @st.experimental_memo
 def get_exchange_rate(date):
-    url='http://info.cnpc/cnpcstockinfo-front/exchangerate/rate_list_json.jsp?crudeStart=' + date
+    url='https://cpfnw.eip.cnpc:8081/exportData?startTime=&endTime='
     headers={
             "User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.82 Safari/537.36"
              }
-    response = requests.get(url=url,headers=headers, allow_redirects = True).json()
-    for ex_info in response['rows']:
-        if ex_info['ertype'] == '美元':
-            return float(ex_info['erout']) / 100
-    return -1
+    response = requests.get(url = url, headers = headers, allow_redirects = True, verify = False).content
+    df = pd.read_excel(io.BytesIO(response), index_col = 0)
+    return df.loc[date[:4] + '-' + date[4: 6] + '-' + date[6:], '售汇价:美元']
 
 @st.experimental_memo
 def get_prices(file, marker_types = TYPE_TO_SYMBOL.keys()):
